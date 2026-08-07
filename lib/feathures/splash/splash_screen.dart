@@ -1,0 +1,68 @@
+import 'package:flutter/material.dart';
+import 'package:news_app/core/datasource/local_data/preferences_maneger.dart';
+import 'package:news_app/feathures/auth/login_screen.dart';
+import 'package:news_app/feathures/home/home_screen.dart';
+import 'package:news_app/feathures/onboarding/onboarding_screen.dart';
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    _navigatorAfterSplash();
+    super.initState();
+  }
+
+  void _navigatorAfterSplash() async {
+    await Future.delayed(Duration(seconds: 1));
+    final bool onboardingComplete =
+        PreferencesManeger().getBool("Onboarding_complete") ?? false;
+    final bool isLoggedIn =
+        PreferencesManeger().getBool("is_logged_in") ?? false;
+    if (!mounted) return;
+    if (!onboardingComplete) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return OnboardingScreen();
+          },
+        ),
+      );
+    } else if (!isLoggedIn) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return LoginScreen();
+          },
+        ),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return HomeScreen();
+          },
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Image.asset(
+        "assets/images/splash.png",
+        width: double.infinity,
+        fit: BoxFit.fill,
+      ),
+    );
+  }
+}
