@@ -8,13 +8,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
-  void _finished(BuildContext context) async {
-    await PreferencesManeger().setBool("Onboarding_complete", true);
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => LoginScreen()),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,6 +116,15 @@ class OnboardingScreen extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  void _finished(BuildContext context) async {
+    await PreferencesManeger().setBool("Onboarding_complete", true);
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginScreen()),
     );
   }
 }

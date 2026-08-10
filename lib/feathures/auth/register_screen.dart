@@ -4,24 +4,27 @@ import 'package:news_app/core/light_theme/light_color.dart';
 import 'package:news_app/core/shared_widget/app_button.dart';
 import 'package:news_app/core/shared_widget/app_form_field.dart';
 import 'package:news_app/feathures/auth/auth_card.dart';
-import 'package:news_app/feathures/auth/register_screen.dart';
 import 'package:news_app/feathures/home_layout/home_layout_scraan.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController emailController = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
 
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
   final GlobalKey<FormState> _form = GlobalKey();
 
   String? errorMessage;
+
   bool isLoading = false;
 
   @override
@@ -69,6 +72,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   return AppValidators.password(v);
                 },
               ),
+              const SizedBox(height: 12),
+
+              AppFormField(
+                titel: "Confirm Password",
+                controller: confirmPasswordController,
+                obscureText: true,
+                onChanged: (value) {},
+                validator: (v) {
+                  return AppValidators.password(v);
+                },
+              ),
               if (errorMessage != null)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -77,14 +91,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(color: Colors.red),
                   ),
                 ),
+
               const SizedBox(height: 20),
 
               AppButton(
                 isLoading: isLoading,
-                text: "Sign in",
+                text: "Sign up",
                 onPressed: () {
                   if (_form.currentState?.validate() ?? false) {
-                    _login();
+                    _register();
                   }
                 },
               ),
@@ -95,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    "Don’t have an account ?",
+                    "Have an account ?",
                     style: TextStyle(
                       color: Color(0xff141414),
                       fontSize: 14,
@@ -104,15 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RegisterScreen(),
-                        ),
-                      );
+                      Navigator.pop(context);
                     },
                     child: const Text(
-                      "Sign up",
+                      "Sign in",
                       style: TextStyle(
                         color: LightColor.primaryColor,
                         fontSize: 14,
@@ -129,34 +139,27 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _login() async {
+  void _register() async {
     setState(() {
       errorMessage = null;
       isLoading = true;
     });
     await Future.delayed(Duration(seconds: 2));
-    final getEmail = PreferencesManeger().getString("email");
 
-    final getPassword = PreferencesManeger().getString("passowrd");
-    if ((getEmail != null && getEmail != emailController.text.trim()) ||
-        (getPassword != null &&
-            getPassword != passwordController.text.trim())) {
+    final savedEmail = PreferencesManeger().getString("email");
+    if (savedEmail != null && savedEmail == emailController.text.trim()) {
       setState(() {
-        errorMessage = "Wrong email or password";
+        errorMessage = "Email is already exist";
         isLoading = false;
       });
       return;
     }
-
-    if (getPassword == null || getEmail == null) {
-      setState(() {
-        errorMessage = "Ao Account found please register";
-        isLoading = false;
-      });
-      return;
-    }
+    await PreferencesManeger().setString("email", emailController.text.trim());
+    await PreferencesManeger().setString(
+      "passowrd",
+      passwordController.text.trim(),
+    );
     await PreferencesManeger().setBool("is_logged_in", true);
-
     setState(() {
       errorMessage = null;
       isLoading = false;

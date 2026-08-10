@@ -9,18 +9,30 @@ class NewsArticaleModel {
     required this.content,
   });
 
-  final String author;
+  final String? author;
   final String title;
 
-  final String description;
+  final String? description;
 
-  final String url;
+  final String? url;
 
   final String urlToImage;
 
-  final String publishedAt;
+  final String? publishedAt;
 
-  final String content;
+  final String? content;
+
+  Map<String, dynamic> toJson() {
+    return {
+      "author": author,
+      "title": title,
+      "description": description,
+      "url": url,
+      "urlToImage": urlToImage,
+      "publishedAt": publishedAt,
+      "content": content,
+    };
+  }
 
   factory NewsArticaleModel.fromJson(Map<String, dynamic> json) {
     return NewsArticaleModel(
@@ -32,17 +44,5 @@ class NewsArticaleModel {
       publishedAt: json["publishedAt"],
       content: json["content"] ?? "",
     );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      author: "author",
-      title: "title",
-      description: "description",
-      url: "url",
-      urlToImage: "urlToImage",
-      publishedAt: "publishedAt",
-      content: "content",
-    };
   }
 }

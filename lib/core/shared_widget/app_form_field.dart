@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class AppFormField extends StatelessWidget {
+class AppFormField extends StatefulWidget {
   final String? label;
   final String titel;
   final String? hintText;
@@ -17,6 +17,7 @@ class AppFormField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final String? Function(String?)? validator;
   final bool isSearcch;
+  final bool obscureText;
   const AppFormField({
     super.key,
     this.validator,
@@ -34,32 +35,53 @@ class AppFormField extends StatelessWidget {
     this.keyboardType,
     this.maxLines = 1,
     this.prefixIcon,
+    this.obscureText = false,
   });
 
+  @override
+  State<AppFormField> createState() => _AppFormFieldState();
+}
+
+class _AppFormFieldState extends State<AppFormField> {
+  bool _isVisible = false;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(titel, style: Theme.of(context).textTheme.titleMedium),
+        Text(widget.titel, style: Theme.of(context).textTheme.titleMedium),
         SizedBox(height: 8.0),
         TextFormField(
-          validator: validator,
-          controller: controller,
-          onChanged: onChanged,
-          keyboardType: keyboardType,
-          maxLines: maxLines,
-          onFieldSubmitted: onSubmitted,
-          inputFormatters: inputFormatters,
-          textInputAction: isSearcch ? TextInputAction.search : textInputAction,
+          validator: widget.validator,
+          controller: widget.controller,
+          onChanged: widget.onChanged,
+          keyboardType: widget.keyboardType,
+          maxLines: widget.maxLines,
+          onFieldSubmitted: widget.onSubmitted,
+          inputFormatters: widget.inputFormatters,
+          obscureText: widget.obscureText && !_isVisible,
+          textInputAction: widget.isSearcch
+              ? TextInputAction.search
+              : widget.textInputAction,
           style: Theme.of(context).textTheme.labelMedium,
           decoration: InputDecoration(
-            prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
-            suffixIcon: suffixIcon != null
-                ? IconButton(icon: Icon(suffixIcon), onPressed: onSuffixPressed)
+            prefixIcon: widget.prefixIcon != null
+                ? Icon(widget.prefixIcon)
                 : null,
-            labelText: label,
-            hintText: hintText,
+            suffixIcon: widget.obscureText
+                ? IconButton(
+                    icon: Icon(
+                      _isVisible ? Icons.visibility_off : Icons.visibility,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isVisible = !_isVisible;
+                      });
+                    },
+                  )
+                : null,
+            labelText: widget.label,
+            hintText: widget.hintText,
             filled: true,
             fillColor: Colors.grey.shade100,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -79,10 +101,12 @@ class AppValidators {
   }
 
   static String? email(String? v) {
-    if (v == null || v.isEmpty) return 'Email is required';
+    if (v == null || v.trim().isEmpty) return 'Email is required';
 
-    final regex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-    if (!regex.hasMatch(v)) {
+    final regex = RegExp(
+      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
+    );
+    if (!regex.hasMatch(v.trim())) {
       return 'Invalid email';
     }
     return null;
@@ -90,10 +114,12 @@ class AppValidators {
 
   static String? password(String? v) {
     if (v == null || v.isEmpty) return 'Password required';
-
-    if (v.length < 6) {
-      return 'Password must be at least 6 chars';
-    }
+    // final regex = RegExp(
+    //   r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+    // );
+    // if (!regex.hasMatch(v)) {
+    //   return 'Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character.';
+    // }
     return null;
   }
 
