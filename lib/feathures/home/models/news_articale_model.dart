@@ -18,7 +18,7 @@ class NewsArticaleModel {
 
   final String urlToImage;
 
-  final String? publishedAt;
+  final DateTime publishedAt;
 
   final String? content;
 
@@ -41,7 +41,7 @@ class NewsArticaleModel {
       description: json["description"] ?? "",
       url: json["url"],
       urlToImage: json["urlToImage"] ?? "",
-      publishedAt: json["publishedAt"],
+      publishedAt: DateTime.tryParse(json["publishedAt"]) ?? DateTime.now(),
       content: json["content"] ?? "",
     );
   }

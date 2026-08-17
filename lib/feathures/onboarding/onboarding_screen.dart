@@ -121,7 +121,6 @@ class OnboardingScreen extends StatelessWidget {
 
   void _finished(BuildContext context) async {
     await PreferencesManeger().setBool("Onboarding_complete", true);
-
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => LoginScreen()),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/datasource/remote_data/api_config.dart';
 import 'package:news_app/core/datasource/remote_data/api_service.dart';
+import 'package:news_app/core/enums/request_status_enums.dart';
 import 'package:news_app/feathures/home/models/news_articale_model.dart';
 
 class HomeController extends ChangeNotifier {
@@ -9,28 +10,31 @@ class HomeController extends ChangeNotifier {
     getEverything();
   }
 
-  bool topHeadlineLoading = true;
-  bool everyThingLoading = true;
+  RequestStatusEnums topHeadlineStatus = RequestStatusEnums.loading;
+  RequestStatusEnums everythingStatus = RequestStatusEnums.loading;
 
   List<NewsArticaleModel> newsTopHeadlineList = [];
   List<NewsArticaleModel> newsEveryThingList = [];
   ApiService apiService = ApiService();
   String? errorMessage;
+  String? selectedCategory;
 
-  void getTopHeadline() async {
+  void getTopHeadline({String? category}) async {
     try {
+      topHeadlineStatus = RequestStatusEnums.loading;
+      notifyListeners();
       Map<String, dynamic> result = await apiService.get(
         endpoint: ApiConfig.topHeadLines,
-        params: {"country": "us"},
+        params: {"country": "us", "category": category},
       );
 
       newsTopHeadlineList = (result["articles"] as List)
           .map((e) => NewsArticaleModel.fromJson(e))
           .toList();
-      topHeadlineLoading = false;
+      topHeadlineStatus = RequestStatusEnums.loaded;
       errorMessage = null;
     } catch (e) {
-      topHeadlineLoading = false;
+      topHeadlineStatus = RequestStatusEnums.error;
       errorMessage = e.toString();
     }
     notifyListeners();
@@ -45,12 +49,19 @@ class HomeController extends ChangeNotifier {
       newsEveryThingList = (result["articles"] as List)
           .map((e) => NewsArticaleModel.fromJson(e))
           .toList();
-      everyThingLoading = false;
+      everythingStatus = RequestStatusEnums.loaded;
       errorMessage = null;
     } catch (e) {
-      everyThingLoading = false;
+      everythingStatus = RequestStatusEnums.error;
       errorMessage = e.toString();
     }
+    notifyListeners();
+  }
+
+  void updateSelectedCategory({required String category}) {
+    selectedCategory = category;
+
+    getTopHeadline(category: selectedCategory);
     notifyListeners();
   }
 }
