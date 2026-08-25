@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/core/constants/app_size.dart';
 
 class AuthCard extends StatelessWidget {
   AuthCard({super.key, required this.child});
@@ -21,7 +22,7 @@ class AuthCard extends StatelessWidget {
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: constraints.maxHeight),
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(AppSize.r16),
                   child: child,
                 ),
               ),

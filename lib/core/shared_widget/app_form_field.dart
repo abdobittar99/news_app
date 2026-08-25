@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:news_app/core/constants/app_size.dart';
 
 class AppFormField extends StatefulWidget {
   final String? label;
@@ -50,7 +51,7 @@ class _AppFormFieldState extends State<AppFormField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(widget.titel, style: Theme.of(context).textTheme.titleMedium),
-        SizedBox(height: 8.0),
+        SizedBox(height: AppSize.h8),
         TextFormField(
           validator: widget.validator,
           controller: widget.controller,
@@ -84,7 +85,7 @@ class _AppFormFieldState extends State<AppFormField> {
             hintText: widget.hintText,
             filled: true,
             fillColor: Colors.grey.shade100,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(AppSize.r12)),
           ),
         ),
       ],

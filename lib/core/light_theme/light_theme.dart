@@ -13,11 +13,11 @@ ThemeData lightTheme = ThemeData(
   primaryColor: LightColor.primaryColor,
   appBarTheme: AppBarTheme(
     backgroundColor: Color(0xffFFFFFF),
-    // titleTextStyle: TextStyle(
-    //   fontSize: 20,
-    //   fontWeight: FontWeight.w400,
-    //   color: Color(0xff161F1B),
-    // ),
+    titleTextStyle: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w700,
+      color: Color(0xff141414),
+    ),
     // iconTheme: IconThemeData(color: Color(0xff161F1B)),
   ),
 
@@ -113,6 +113,7 @@ ThemeData lightTheme = ThemeData(
       foregroundColor: Color(0xffFFFCFC),
       textStyle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      minimumSize: Size.fromHeight(48),
     ),
   ),
   textButtonTheme: TextButtonThemeData(

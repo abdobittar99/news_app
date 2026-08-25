@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/core/constants/app_size.dart';
 
 class AppButton extends StatelessWidget {
   final String text;
@@ -22,13 +23,13 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 48,
+      height: AppSize.h45,
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         child: isLoading
-            ? const SizedBox(
-                width: 20,
-                height: 20,
+            ? SizedBox(
+                width: AppSize.w20,
+                height: AppSize.h20,
                 child: CircularProgressIndicator(strokeWidth: 2),
               )
             : _buildContent(),
@@ -44,8 +45,8 @@ class AppButton extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(icon, size: 18, color: iconColor),
-        const SizedBox(width: 8),
+        Icon(icon, size: AppSize.r18, color: iconColor),
+        SizedBox(width: AppSize.w8),
         Text(text, style: textStyle),
       ],
     );

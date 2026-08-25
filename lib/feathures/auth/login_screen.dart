@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/datasource/local_data/preferences_maneger.dart';
 import 'package:news_app/core/light_theme/light_color.dart';
 import 'package:news_app/core/shared_widget/app_button.dart';
@@ -34,19 +35,24 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(child: Image.asset("assets/images/logo.png", height: 45)),
-              const SizedBox(height: 24),
+              Center(
+                child: Image.asset(
+                  "assets/images/logo.png",
+                  height: AppSize.h45,
+                ),
+              ),
+              SizedBox(height: AppSize.h24),
 
-              const Text(
+              Text(
                 "Welcome to Newts",
                 style: TextStyle(
                   color: Color(0xff363636),
-                  fontSize: 20,
+                  fontSize: AppSize.sp20,
                   fontWeight: FontWeight.w700,
                 ),
               ),
 
-              const SizedBox(height: 16),
+              SizedBox(height: AppSize.h16),
 
               AppFormField(
                 titel: "Email",
@@ -58,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
               ),
 
-              const SizedBox(height: 12),
+              SizedBox(height: AppSize.h12),
 
               AppFormField(
                 titel: "Password",
@@ -71,13 +77,13 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               if (errorMessage != null)
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  padding: EdgeInsets.symmetric(vertical: AppSize.h8),
                   child: Text(
                     errorMessage!,
                     style: TextStyle(color: Colors.red),
                   ),
                 ),
-              const SizedBox(height: 20),
+              SizedBox(height: AppSize.h20),
 
               AppButton(
                 isLoading: isLoading,
@@ -89,16 +95,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
               ),
 
-              const SizedBox(height: 24),
+              SizedBox(height: AppSize.h24),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     "Don’t have an account ?",
                     style: TextStyle(
                       color: Color(0xff141414),
-                      fontSize: 14,
+                      fontSize: AppSize.sp14,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -111,11 +117,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       "Sign up",
                       style: TextStyle(
                         color: LightColor.primaryColor,
-                        fontSize: 14,
+                        fontSize: AppSize.sp14,
                         fontWeight: FontWeight.w400,
                       ),
                     ),

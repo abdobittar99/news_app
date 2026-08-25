@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/core/datasource/remote_data/api_config.dart';
 import 'package:news_app/core/datasource/remote_data/api_service.dart';
 import 'package:news_app/core/enums/request_status_enums.dart';
+import 'package:news_app/core/mixins/safe_notifi_mixin.dart';
 import 'package:news_app/feathures/home/models/news_articale_model.dart';
+import 'package:news_app/feathures/home/repository/news_repository.dart';
 
-class HomeController extends ChangeNotifier {
-  HomeController() {
+class HomeController extends ChangeNotifier with SafeNotifi {
+  HomeController(this.newsRepository) {
     getTopHeadline();
     getEverything();
   }
@@ -18,50 +19,42 @@ class HomeController extends ChangeNotifier {
   ApiService apiService = ApiService();
   String? errorMessage;
   String? selectedCategory;
+  final BaseNewsRepository newsRepository;
 
   void getTopHeadline({String? category}) async {
     try {
       topHeadlineStatus = RequestStatusEnums.loading;
-      notifyListeners();
-      Map<String, dynamic> result = await apiService.get(
-        endpoint: ApiConfig.topHeadLines,
-        params: {"country": "us", "category": category},
-      );
+      safeNotifi();
 
-      newsTopHeadlineList = (result["articles"] as List)
-          .map((e) => NewsArticaleModel.fromJson(e))
-          .toList();
+      newsTopHeadlineList = await newsRepository.getTopHeadline(
+        category: category,
+      );
       topHeadlineStatus = RequestStatusEnums.loaded;
       errorMessage = null;
     } catch (e) {
       topHeadlineStatus = RequestStatusEnums.error;
       errorMessage = e.toString();
     }
-    notifyListeners();
+    safeNotifi();
   }
 
   void getEverything() async {
     try {
-      Map<String, dynamic> result = await apiService.get(
-        endpoint: ApiConfig.everything,
-        params: {"q": "sports"},
-      );
-      newsEveryThingList = (result["articles"] as List)
-          .map((e) => NewsArticaleModel.fromJson(e))
-          .toList();
+      newsEveryThingList = await newsRepository.getEverything();
       everythingStatus = RequestStatusEnums.loaded;
+
       errorMessage = null;
     } catch (e) {
       everythingStatus = RequestStatusEnums.error;
       errorMessage = e.toString();
     }
-    notifyListeners();
+    safeNotifi();
   }
 
   void updateSelectedCategory({required String category}) {
     selectedCategory = category;
 
     getTopHeadline(category: selectedCategory);
-    notifyListeners();
+    safeNotifi();
   }
 }

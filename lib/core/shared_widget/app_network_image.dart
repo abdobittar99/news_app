@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/core/constants/app_size.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AppNetworkImage extends StatelessWidget {
@@ -24,8 +25,8 @@ class AppNetworkImage extends StatelessWidget {
         ? _placeholder()
         : CachedNetworkImage(
             imageUrl: imageUrl,
-            width: width ?? 120,
-            height: height ?? 70,
+            width: width ?? AppSize.w120,
+            height: height ?? AppSize.h70,
             fit: fit,
             placeholder: (context, url) => Shimmer.fromColors(
               baseColor: Colors.grey.shade300,

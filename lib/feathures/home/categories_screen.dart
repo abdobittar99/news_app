@@ -1,38 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/light_theme/light_color.dart';
-import 'package:news_app/feathures/home/categories_screen.dart';
-import 'package:news_app/feathures/home/componants/view_all_componatnts.dart';
+import 'package:news_app/feathures/home/componants/categories_list.dart';
+import 'package:news_app/feathures/home/componants/news_item.dart';
 import 'package:news_app/feathures/home/home_controller.dart';
 import 'package:provider/provider.dart';
 
-class CategoriesList extends StatelessWidget {
-  const CategoriesList({super.key});
+class CategoriesScreen extends StatelessWidget {
+  const CategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeController>(
-      builder: (context, controller, child) {
-        return SliverToBoxAdapter(
-          child: Column(
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Categories"),
+        surfaceTintColor: Colors.transparent,
+        scrolledUnderElevation: 0,
+        elevation: 0,
+      ),
+
+      body: Consumer<HomeController>(
+        builder: (context, controller, child) {
+          return Column(
             children: [
-              ViewAllComponatnts(
-                titel: "Categories",
-                titleColor: Color(0xff141414),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return ChangeNotifierProvider.value(
-                          value: controller,
-                          child: CategoriesScreen(),
-                        );
-                      },
-                    ),
-                  );
-                },
-              ),
               Padding(
                 padding: EdgeInsets.only(
                   left: AppSize.w16,
@@ -76,6 +67,7 @@ class CategoriesList extends StatelessWidget {
                         ),
                       );
                     },
+
                     separatorBuilder: (context, index) {
                       return SizedBox(width: AppSize.w12);
                     },
@@ -83,20 +75,19 @@ class CategoriesList extends StatelessWidget {
                   ),
                 ),
               ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: controller.newsTopHeadlineList.length,
+                  itemBuilder: (context, index) {
+                    final model = controller.newsTopHeadlineList[index];
+                    return NewsItem(model: model);
+                  },
+                ),
+              ),
             ],
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
-
-final List<String> categories = [
-  "business",
-  "entertainment",
-  "general",
-  "health",
-  "science",
-  "sports",
-  "technology",
-];

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/datasource/local_data/preferences_maneger.dart';
 import 'package:news_app/feathures/auth/login_screen.dart';
 import 'package:news_app/feathures/onboarding/controller/onboarding_controller.dart';
@@ -28,7 +29,10 @@ class OnboardingScreen extends StatelessWidget {
                           onPressed: () {
                             _finished(context);
                           },
-                          child: Text("Skip", style: TextStyle(fontSize: 16.0)),
+                          child: Text(
+                            "Skip",
+                            style: TextStyle(fontSize: AppSize.sp16),
+                          ),
                         );
                 },
               ),
@@ -36,9 +40,9 @@ class OnboardingScreen extends StatelessWidget {
           ),
 
           body: Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 20.0,
-              horizontal: 16.0,
+            padding: EdgeInsets.symmetric(
+              vertical: AppSize.h20,
+              horizontal: AppSize.w16,
             ),
             child: Column(
               children: [
@@ -56,20 +60,20 @@ class OnboardingScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(model.image),
-                          SizedBox(height: 24.0),
+                          SizedBox(height: AppSize.h24),
                           Text(
                             model.titel,
                             style: TextStyle(
-                              fontSize: 20.0,
+                              fontSize: AppSize.sp20,
                               color: Color(0xff4E4B66),
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          SizedBox(height: 12.0),
+                          SizedBox(height: AppSize.h12),
                           Text(
                             model.description,
                             style: TextStyle(
-                              fontSize: 16.0,
+                              fontSize: AppSize.sp16,
                               color: Color(0xff6E7191),
                               fontWeight: FontWeight.w400,
                             ),
@@ -89,25 +93,22 @@ class OnboardingScreen extends StatelessWidget {
                     );
                   },
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: AppSize.h10),
                 Consumer<OnboardingController>(
                   builder: (context, value, child) {
-                    return SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (!value.islastPage) {
-                            controller.pageController.nextPage(
-                              duration: Duration(milliseconds: 300),
-                              curve: Curves.easeInOut,
-                            );
-                          } else {
-                            _finished(context);
-                          }
-                        },
+                    return ElevatedButton(
+                      onPressed: () {
+                        if (!value.islastPage) {
+                          controller.pageController.nextPage(
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        } else {
+                          _finished(context);
+                        }
+                      },
 
-                        child: Text(value.islastPage ? "Get Started" : "Next"),
-                      ),
+                      child: Text(value.islastPage ? "Get Started" : "Next"),
                     );
                   },
                 ),
