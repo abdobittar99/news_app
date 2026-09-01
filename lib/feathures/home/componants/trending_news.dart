@@ -4,6 +4,7 @@ import 'package:news_app/core/enums/request_status_enums.dart';
 import 'package:news_app/core/extensions/date_time_extension.dart';
 import 'package:news_app/core/light_theme/light_color.dart';
 import 'package:news_app/core/shared_widget/app_network_image.dart';
+import 'package:news_app/feathures/details/news_details_screen.dart';
 import 'package:news_app/feathures/home/componants/shimmer/trending_news_shimmer.dart';
 import 'package:news_app/feathures/home/componants/view_all_componatnts.dart';
 import 'package:news_app/feathures/home/home_controller.dart';
@@ -67,119 +68,136 @@ class TrendingNews extends StatelessWidget {
                                 final model =
                                     controller.newsEveryThingList[index];
 
-                                return SizedBox(
-                                  width: AppSize.w240,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(
-                                      AppSize.r12,
-                                    ),
-                                    child: Stack(
-                                      children: [
-                                        AppNetworkImage(
-                                          imageUrl: model.urlToImage,
-                                          width: AppSize.w240,
-                                          height: AppSize.h140,
-                                          fit: BoxFit.cover,
-                                        ),
-                                        Positioned.fill(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                begin:
-                                                    AlignmentGeometry.topCenter,
-                                                end:
-                                                    AlignmentGeometry.bottomEnd,
-                                                colors: [
-                                                  Colors.black.withValues(
-                                                    alpha: 0.2,
-                                                  ),
-                                                  Colors.black.withValues(
-                                                    alpha: 0.45,
-                                                  ),
-                                                  Colors.black.withValues(
-                                                    alpha: 0.7,
-                                                  ),
-                                                ],
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return NewsDetailsScreen(
+                                            model: model,
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: SizedBox(
+                                    width: AppSize.w240,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                        AppSize.r12,
+                                      ),
+                                      child: Stack(
+                                        children: [
+                                          AppNetworkImage(
+                                            imageUrl: model.urlToImage,
+                                            width: AppSize.w240,
+                                            height: AppSize.h140,
+                                            fit: BoxFit.cover,
+                                          ),
+                                          Positioned.fill(
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  begin: AlignmentGeometry
+                                                      .topCenter,
+                                                  end: AlignmentGeometry
+                                                      .bottomEnd,
+                                                  colors: [
+                                                    Colors.black.withValues(
+                                                      alpha: 0.2,
+                                                    ),
+                                                    Colors.black.withValues(
+                                                      alpha: 0.45,
+                                                    ),
+                                                    Colors.black.withValues(
+                                                      alpha: 0.7,
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        Positioned(
-                                          right: AppSize.w10,
-                                          left: AppSize.w10,
-                                          bottom: AppSize.h10,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                model.title,
-                                                maxLines: 2,
-                                                style: TextStyle(
-                                                  color: Color(0xffFFFCFC),
-                                                  fontSize: AppSize.sp14,
-                                                  fontWeight: FontWeight.w700,
+                                          Positioned(
+                                            right: AppSize.w10,
+                                            left: AppSize.w10,
+                                            bottom: AppSize.h10,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  model.title,
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                    color: Color(0xffFFFCFC),
+                                                    fontSize: AppSize.sp14,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              SizedBox(height: AppSize.h4),
-                                              Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Row(
-                                                      children: [
-                                                        ClipOval(
-                                                          child:
-                                                              AppNetworkImage(
-                                                                imageUrl: model
-                                                                    .urlToImage,
-                                                                width:
-                                                                    AppSize.w28,
-                                                                height:
-                                                                    AppSize.h28,
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                              ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: AppSize.w2,
-                                                        ),
-                                                        Expanded(
-                                                          child: Text(
-                                                            model.author ?? "",
-                                                            style: TextStyle(
-                                                              color: Color(
-                                                                0xffFFFCFC,
-                                                              ),
-                                                              fontSize:
-                                                                  AppSize.sp14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
+                                                SizedBox(height: AppSize.h4),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Row(
+                                                        children: [
+                                                          ClipOval(
+                                                            child: AppNetworkImage(
+                                                              imageUrl: model
+                                                                  .urlToImage,
+                                                              width:
+                                                                  AppSize.w28,
+                                                              height:
+                                                                  AppSize.h28,
+                                                              fit: BoxFit.cover,
                                                             ),
-                                                            maxLines: 1,
                                                           ),
-                                                        ),
-                                                      ],
+                                                          SizedBox(
+                                                            width: AppSize.w2,
+                                                          ),
+                                                          Expanded(
+                                                            child: Text(
+                                                              model.author ??
+                                                                  "",
+                                                              style: TextStyle(
+                                                                color: Color(
+                                                                  0xffFFFCFC,
+                                                                ),
+                                                                fontSize:
+                                                                    AppSize
+                                                                        .sp14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                              ),
+                                                              maxLines: 1,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    model.publishedAt
-                                                        .formateDateTime(),
+                                                    Text(
+                                                      model.publishedAt
+                                                          .formateDateTime(),
 
-                                                    style: TextStyle(
-                                                      color: Color(0xffFFFcfc),
-                                                      fontSize: AppSize.sp14,
-                                                      fontWeight:
-                                                          FontWeight.w400,
+                                                      style: TextStyle(
+                                                        color: Color(
+                                                          0xffFFFcfc,
+                                                        ),
+                                                        fontSize: AppSize.sp14,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/datasource/remote_data/api_service.dart';
 import 'package:news_app/core/repository/news_repository.dart';
+import 'package:news_app/feathures/details/news_details_screen.dart';
 import 'package:news_app/feathures/search/search_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +40,16 @@ class SearchScreen extends StatelessWidget {
                         return Padding(
                           padding: EdgeInsets.only(bottom: AppSize.h12),
                           child: ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return NewsDetailsScreen(model: model);
+                                  },
+                                ),
+                              );
+                            },
                             leading: Icon(
                               Icons.search_outlined,
                               color: Color(0xff6D6D6D),
