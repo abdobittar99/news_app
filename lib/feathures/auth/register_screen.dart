@@ -15,6 +15,8 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController userNameController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
@@ -46,7 +48,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               SizedBox(height: AppSize.h24),
 
-               Text(
+              Text(
                 "Welcome to Newts",
                 style: TextStyle(
                   color: Color(0xff363636),
@@ -55,7 +57,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
 
-               SizedBox(height: AppSize.h16),
+              SizedBox(height: AppSize.h16),
+              AppFormField(
+                titel: "User Name",
+                hintText: "Abdo Bittar",
+                controller: userNameController,
+                onChanged: (value) {},
+                validator: (v) {
+                  return AppValidators.required(v);
+                },
+              ),
+
+              SizedBox(height: AppSize.h12),
 
               AppFormField(
                 titel: "Email",
@@ -67,7 +80,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 },
               ),
 
-               SizedBox(height: AppSize.h12),
+              SizedBox(height: AppSize.h12),
 
               AppFormField(
                 titel: "Password",
@@ -78,7 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   return AppValidators.password(v);
                 },
               ),
-               SizedBox(height: AppSize.h12),
+              SizedBox(height: AppSize.h12),
 
               AppFormField(
                 titel: "Confirm Password",
@@ -91,14 +104,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               if (errorMessage != null)
                 Padding(
-                  padding:  EdgeInsets.symmetric(vertical: AppSize.h8),
+                  padding: EdgeInsets.symmetric(vertical: AppSize.h8),
                   child: Text(
                     errorMessage!,
                     style: TextStyle(color: Colors.red),
                   ),
                 ),
 
-               SizedBox(height: AppSize.h20),
+              SizedBox(height: AppSize.h20),
 
               AppButton(
                 isLoading: isLoading,
@@ -110,12 +123,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 },
               ),
 
-               SizedBox(height: AppSize.h24),
+              SizedBox(height: AppSize.h24),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   Text(
+                  Text(
                     "Have an account ?",
                     style: TextStyle(
                       color: Color(0xff141414),
@@ -127,7 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child:  Text(
+                    child: Text(
                       "Sign in",
                       style: TextStyle(
                         color: LightColor.primaryColor,
@@ -160,6 +173,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       });
       return;
     }
+    await PreferencesManeger().setString(
+      "userName",
+      userNameController.text.trim(),
+    );
+
     await PreferencesManeger().setString("email", emailController.text.trim());
     await PreferencesManeger().setString(
       "passowrd",

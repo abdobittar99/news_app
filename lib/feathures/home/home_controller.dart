@@ -3,7 +3,7 @@ import 'package:news_app/core/datasource/remote_data/api_service.dart';
 import 'package:news_app/core/enums/request_status_enums.dart';
 import 'package:news_app/core/mixins/safe_notifi_mixin.dart';
 import 'package:news_app/feathures/home/models/news_articale_model.dart';
-import 'package:news_app/feathures/home/repository/news_repository.dart';
+import 'package:news_app/core/repository/news_repository.dart';
 
 class HomeController extends ChangeNotifier with SafeNotifi {
   HomeController(this.newsRepository) {
