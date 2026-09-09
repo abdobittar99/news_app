@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/datasource/local_data/preferences_maneger.dart';
+import 'package:news_app/core/datasource/local_data/user_repository.dart';
 import 'package:news_app/core/light_theme/light_color.dart';
 import 'package:news_app/core/shared_widget/app_button.dart';
 import 'package:news_app/core/shared_widget/app_form_field.dart';
@@ -140,33 +141,21 @@ class _LoginScreenState extends State<LoginScreen> {
       errorMessage = null;
       isLoading = true;
     });
+
     await Future.delayed(Duration(seconds: 2));
-    final getEmail = PreferencesManeger().getString("email");
-
-    final getPassword = PreferencesManeger().getString("passowrd");
-    if ((getEmail != null && getEmail != emailController.text.trim()) ||
-        (getPassword != null &&
-            getPassword != passwordController.text.trim())) {
+    final String? error = UserRepository().login(
+      emailController.text,
+      passwordController.text,
+    );
+    if (error != null) {
       setState(() {
-        errorMessage = "Wrong email or password";
-        isLoading = false;
-      });
-      return;
-    }
-
-    if (getPassword == null || getEmail == null) {
-      setState(() {
-        errorMessage = "Ao Account found please register";
+        errorMessage = error;
         isLoading = false;
       });
       return;
     }
     await PreferencesManeger().setBool("is_logged_in", true);
 
-    setState(() {
-      errorMessage = null;
-      isLoading = false;
-    });
     if (!mounted) return;
     Navigator.pushReplacement(
       context,

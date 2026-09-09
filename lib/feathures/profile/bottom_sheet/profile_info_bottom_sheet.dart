@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/constants/app_size.dart';
-import 'package:news_app/core/constants/storage_key.dart';
-import 'package:news_app/core/datasource/local_data/preferences_maneger.dart';
+import 'package:news_app/core/datasource/local_data/user_repository.dart';
+import 'package:news_app/core/models/user_model.dart';
 import 'package:news_app/core/shared_widget/app_button.dart';
 import 'package:news_app/core/shared_widget/app_form_field.dart';
 
@@ -24,22 +24,18 @@ class _ProfileInfoBottomSheetState extends State<ProfileInfoBottomSheet> {
   }
 
   void _loadUserdata() {
-    userNameController.text =
-        PreferencesManeger().getString(StorageKey.username) ?? "";
-    emailController.text =
-        PreferencesManeger().getString(StorageKey.email) ?? "";
+    final UserModel user = UserRepository().getUser()!;
+    userNameController.text = user.name ?? "";
+    emailController.text = user.email ?? "";
   }
 
-  void _saveData() async {
+  Future<void> _saveData() async {
     if (_key.currentState?.validate() ?? false) {
-      await PreferencesManeger().setString(
-        StorageKey.username,
-        userNameController.text,
+      await UserRepository().upadateUser(
+        email: emailController.text,
+        name: userNameController.text,
       );
-      await PreferencesManeger().setString(
-        StorageKey.email,
-        emailController.text,
-      );
+
       Navigator.pop(context);
     }
   }

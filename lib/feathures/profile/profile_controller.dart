@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:news_app/core/constants/storage_key.dart';
 import 'package:news_app/core/datasource/local_data/preferences_maneger.dart';
+import 'package:news_app/core/datasource/local_data/user_repository.dart';
 import 'package:news_app/core/mixins/safe_notifi_mixin.dart';
+import 'package:news_app/core/models/user_model.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ProfileController extends ChangeNotifier with SafeNotifi {
@@ -20,33 +22,24 @@ class ProfileController extends ChangeNotifier with SafeNotifi {
     loaduser();
   }
 
-  void loadUsername() {
-    username =
-        PreferencesManeger().getString(StorageKey.username) ??
-        PreferencesManeger().getString("email")!;
-    safeNotifi();
-  }
-
   void loaduser() async {
-    username =
-        PreferencesManeger().getString(StorageKey.username) ??
-        PreferencesManeger().getString("email")!;
-    userImageProf = PreferencesManeger().getString(StorageKey.userImage);
-        countryName = PreferencesManeger().getString(StorageKey.countryName);
-    countryCode = PreferencesManeger().getString(StorageKey.countryCode);
+    final UserModel? user = UserRepository().getUser();
+    username = user?.name ?? " User Name";
+    countryName = user?.countryName ;
+    countryCode = user?.countryCode ?? "";
 
     isloading = false;
     safeNotifi();
   }
 
-  void saveCountry(Country savedCountry) async{
-    await PreferencesManeger().setString(StorageKey.countryName, savedCountry.name);
-   await PreferencesManeger().setString(
-      StorageKey.countryCode,
-      savedCountry.countryCode,
+  void saveCountry(Country savedCountry) async {
+    await UserRepository().upadateUser(
+      countryName: savedCountry.name,
+      countryCode: savedCountry.countryCode,
     );
     countryName = savedCountry.name;
     countryCode = savedCountry.countryCode;
+    safeNotifi();
   }
 
   void pickImage(ImageSource source) async {
@@ -69,3 +62,5 @@ class ProfileController extends ChangeNotifier with SafeNotifi {
     return newFile.path;
   }
 }
+
+// userImageProf = PreferencesManeger().getString(StorageKey.userImage);

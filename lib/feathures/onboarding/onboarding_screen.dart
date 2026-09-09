@@ -128,12 +128,3 @@ class OnboardingScreen extends StatelessWidget {
     );
   }
 }
-//TODO image size
-
-// SizedBox(
-//   height: MediaQuery.of(context).size.height * .3,
-//   child: Image.asset(
-//     model.image,
-//     fit: BoxFit.contain,
-//   ),
-// )

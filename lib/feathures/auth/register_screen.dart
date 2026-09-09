@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/datasource/local_data/preferences_maneger.dart';
+import 'package:news_app/core/datasource/local_data/user_repository.dart';
 import 'package:news_app/core/light_theme/light_color.dart';
 import 'package:news_app/core/shared_widget/app_button.dart';
 import 'package:news_app/core/shared_widget/app_form_field.dart';
@@ -164,25 +165,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
       isLoading = true;
     });
     await Future.delayed(Duration(seconds: 2));
+    final String? error = await UserRepository().sginUp(
+      email: emailController.text,
+      password: passwordController.text,
+      userName: userNameController.text,
+    );
 
-    final savedEmail = PreferencesManeger().getString("email");
-    if (savedEmail != null && savedEmail == emailController.text.trim()) {
+    if (error != null) {
       setState(() {
-        errorMessage = "Email is already exist";
+        errorMessage = error;
         isLoading = false;
       });
       return;
     }
-    await PreferencesManeger().setString(
-      "userName",
-      userNameController.text.trim(),
-    );
 
-    await PreferencesManeger().setString("email", emailController.text.trim());
-    await PreferencesManeger().setString(
-      "passowrd",
-      passwordController.text.trim(),
-    );
     await PreferencesManeger().setBool("is_logged_in", true);
     setState(() {
       errorMessage = null;

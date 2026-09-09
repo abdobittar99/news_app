@@ -3,12 +3,11 @@ import 'dart:io';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:news_app/core/datasource/local_data/user_repository.dart';
 import 'package:news_app/core/light_theme/light_color.dart';
 import 'package:news_app/feathures/profile/bottom_sheet/profile_info_bottom_sheet.dart';
 import 'package:news_app/feathures/profile/profile_controller.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:news_app/core/constants/app_size.dart';
-import 'package:news_app/core/constants/storage_key.dart';
 import 'package:news_app/core/datasource/local_data/preferences_maneger.dart';
 import 'package:news_app/feathures/auth/login_screen.dart';
 import 'package:provider/provider.dart';
@@ -86,7 +85,7 @@ class ProfileScreen extends StatelessWidget {
                               return ProfileInfoBottomSheet();
                             },
                           ).then((value) {
-                            controller.loadUsername();
+                            controller.loaduser();
                           });
                         }),
                         _buildProfileItem("Language", Icons.language, () {}),
@@ -111,6 +110,8 @@ class ProfileScreen extends StatelessWidget {
                           "Log Out",
                           Icons.logout,
                           () async {
+                            await UserRepository().delete();
+
                             await PreferencesManeger().clear();
 
                             Navigator.pushReplacement(
