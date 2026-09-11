@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/extensions/date_time_extension.dart';
 import 'package:news_app/core/shared_widget/app_network_image.dart';
+import 'package:news_app/core/shared_widget/bookmark_button.dart';
 import 'package:news_app/feathures/details/news_details_screen.dart';
-import 'package:news_app/feathures/home/models/news_articale_model.dart';
+import 'package:news_app/feathures/home/models/news_article_model.dart';
 
 class NewsItem extends StatelessWidget {
   const NewsItem({super.key, required this.model});
-  final NewsArticaleModel model;
+  final NewsArticleModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -94,10 +95,7 @@ class NewsItem extends StatelessWidget {
                               ),
                             ),
                             Spacer(),
-                            Icon(
-                              Icons.bookmark_border_outlined,
-                              color: Color(0xff363636),
-                            ),
+                            BookmarkButton(article: model, size: AppSize.w20),
                           ],
                         ),
                       ),

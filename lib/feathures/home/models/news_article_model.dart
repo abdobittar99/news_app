@@ -1,5 +1,5 @@
-class NewsArticaleModel {
-  NewsArticaleModel({
+class NewsArticleModel {
+  NewsArticleModel({
     required this.author,
     required this.title,
     required this.description,
@@ -34,8 +34,8 @@ class NewsArticaleModel {
     };
   }
 
-  factory NewsArticaleModel.fromJson(Map<String, dynamic> json) {
-    return NewsArticaleModel(
+  factory NewsArticleModel.fromJson(Map<String, dynamic> json) {
+    return NewsArticleModel(
       author: json['author'] ?? "",
       title: json['title'] ?? "",
       description: json["description"] ?? "",

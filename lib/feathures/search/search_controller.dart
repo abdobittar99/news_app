@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:news_app/core/enums/request_status_enums.dart';
 import 'package:news_app/core/mixins/safe_notifi_mixin.dart';
 import 'package:news_app/core/repository/news_repository.dart';
-import 'package:news_app/feathures/home/models/news_articale_model.dart';
+import 'package:news_app/feathures/home/models/news_article_model.dart';
 
-class SearchScreenController extends ChangeNotifier with SafeNotifi {
+class SearchScreenController extends ChangeNotifier with SafeNotify {
   SearchScreenController(this.newsRepository);
   RequestStatusEnums everythingStatus = RequestStatusEnums.loading;
-  List<NewsArticaleModel> newsEveryThingList = [];
+  List<NewsArticleModel> newsEveryThingList = [];
   String? errorMessage;
   final BaseNewsRepository newsRepository;
 
@@ -25,6 +25,6 @@ class SearchScreenController extends ChangeNotifier with SafeNotifi {
       everythingStatus = RequestStatusEnums.error;
       errorMessage = e.toString();
     }
-    safeNotifi();
+    safeNotify();
   }
 }

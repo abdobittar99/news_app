@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:news_app/core/datasource/remote_data/api_service.dart';
 import 'package:news_app/core/enums/request_status_enums.dart';
 import 'package:news_app/core/mixins/safe_notifi_mixin.dart';
-import 'package:news_app/feathures/home/models/news_articale_model.dart';
+import 'package:news_app/feathures/home/models/news_article_model.dart';
 import 'package:news_app/core/repository/news_repository.dart';
 
-class HomeController extends ChangeNotifier with SafeNotifi {
+class HomeController extends ChangeNotifier with SafeNotify {
   HomeController(this.newsRepository) {
     getTopHeadline();
     getEverything();
@@ -14,8 +14,8 @@ class HomeController extends ChangeNotifier with SafeNotifi {
   RequestStatusEnums topHeadlineStatus = RequestStatusEnums.loading;
   RequestStatusEnums everythingStatus = RequestStatusEnums.loading;
 
-  List<NewsArticaleModel> newsTopHeadlineList = [];
-  List<NewsArticaleModel> newsEveryThingList = [];
+  List<NewsArticleModel> newsTopHeadlineList = [];
+  List<NewsArticleModel> newsEveryThingList = [];
   ApiService apiService = ApiService();
   String? errorMessage;
   String? selectedCategory;
@@ -24,7 +24,7 @@ class HomeController extends ChangeNotifier with SafeNotifi {
   void getTopHeadline({String? category}) async {
     try {
       topHeadlineStatus = RequestStatusEnums.loading;
-      safeNotifi();
+      safeNotify();
 
       newsTopHeadlineList = await newsRepository.getTopHeadline(
         category: category,
@@ -35,7 +35,7 @@ class HomeController extends ChangeNotifier with SafeNotifi {
       topHeadlineStatus = RequestStatusEnums.error;
       errorMessage = e.toString();
     }
-    safeNotifi();
+    safeNotify();
   }
 
   void getEverything() async {
@@ -48,13 +48,13 @@ class HomeController extends ChangeNotifier with SafeNotifi {
       everythingStatus = RequestStatusEnums.error;
       errorMessage = e.toString();
     }
-    safeNotifi();
+    safeNotify();
   }
 
   void updateSelectedCategory({required String category}) {
     selectedCategory = category;
 
     getTopHeadline(category: selectedCategory);
-    safeNotifi();
+    safeNotify();
   }
 }

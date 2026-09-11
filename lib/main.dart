@@ -3,12 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app/core/datasource/local_data/preferences_maneger.dart';
 import 'package:news_app/core/datasource/local_data/user_repository.dart';
 import 'package:news_app/core/light_theme/light_theme.dart';
+import 'package:news_app/feathures/bookmark/data/bookmark_repository.dart';
 import 'package:news_app/feathures/splash/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
   await UserRepository().init();
+  await BookmarkRepository().init();
 
   await PreferencesManeger().init();
   runApp(MyApp());

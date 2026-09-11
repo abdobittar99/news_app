@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-mixin SafeNotifi on ChangeNotifier {
+mixin SafeNotify on ChangeNotifier {
   bool isDispose = false;
 
-  void safeNotifi() {
+  void safeNotify() {
     if (!isDispose) notifyListeners();
   }
 

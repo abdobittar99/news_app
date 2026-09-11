@@ -5,11 +5,12 @@ import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/extensions/date_time_extension.dart';
 import 'package:news_app/core/light_theme/light_color.dart';
 import 'package:news_app/core/shared_widget/app_network_image.dart';
-import 'package:news_app/feathures/home/models/news_articale_model.dart';
+import 'package:news_app/core/shared_widget/bookmark_button.dart';
+import 'package:news_app/feathures/home/models/news_article_model.dart';
 
 class NewsDetailsScreen extends StatelessWidget {
   const NewsDetailsScreen({super.key, required this.model});
-  final NewsArticaleModel model;
+  final NewsArticleModel model;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,10 +76,7 @@ class NewsDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       Spacer(),
-                      Icon(
-                        Icons.bookmark_border_outlined,
-                        color: Color(0xff363636),
-                      ),
+                      BookmarkButton(article: model, size: AppSize.w24),
                     ],
                   ),
                 ),

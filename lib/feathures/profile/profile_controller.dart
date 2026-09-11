@@ -10,7 +10,7 @@ import 'package:news_app/core/mixins/safe_notifi_mixin.dart';
 import 'package:news_app/core/models/user_model.dart';
 import 'package:path_provider/path_provider.dart';
 
-class ProfileController extends ChangeNotifier with SafeNotifi {
+class ProfileController extends ChangeNotifier with SafeNotify {
   late String username;
   String? userImageProf;
   bool isloading = true;
@@ -25,11 +25,11 @@ class ProfileController extends ChangeNotifier with SafeNotifi {
   void loaduser() async {
     final UserModel? user = UserRepository().getUser();
     username = user?.name ?? " User Name";
-    countryName = user?.countryName ;
+    countryName = user?.countryName;
     countryCode = user?.countryCode ?? "";
 
     isloading = false;
-    safeNotifi();
+    safeNotify();
   }
 
   void saveCountry(Country savedCountry) async {
@@ -39,7 +39,7 @@ class ProfileController extends ChangeNotifier with SafeNotifi {
     );
     countryName = savedCountry.name;
     countryCode = savedCountry.countryCode;
-    safeNotifi();
+    safeNotify();
   }
 
   void pickImage(ImageSource source) async {
@@ -48,7 +48,7 @@ class ProfileController extends ChangeNotifier with SafeNotifi {
     if (saveImages != null) {
       final newPath = await _saveProfImage(saveImages!);
       userImageProf = newPath;
-      safeNotifi();
+      safeNotify();
     }
   }
 
