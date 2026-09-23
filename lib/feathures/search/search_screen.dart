@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/datasource/remote_data/api_service.dart';
 import 'package:news_app/core/repository/news_repository.dart';
 import 'package:news_app/feathures/details/news_details_screen.dart';
-import 'package:news_app/feathures/search/search_controller.dart';
-import 'package:provider/provider.dart';
+import 'package:news_app/feathures/search/cubit/search_cubit.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => SearchScreenController(NewsRepository(ApiService())),
+    return BlocProvider(
+      create: (context) => SearchCubit(NewsRepository(ApiService())),
       child: Scaffold(
         appBar: AppBar(centerTitle: true, title: Text("Search")),
         body: Padding(
           padding: EdgeInsets.all(AppSize.w16),
-          child: Consumer<SearchScreenController>(
-            builder: (context, controller, child) {
+          child: BlocBuilder<SearchCubit, SearchState>(
+            builder: (context, state) {
               return Column(
                 children: [
                   TextField(
-                    controller: controller.searchController,
+                    controller: context.read<SearchCubit>().searchController,
                     onChanged: (value) {
-                      controller.getEverything();
+                      context.read<SearchCubit>().getEverything();
                     },
                     decoration: InputDecoration(
                       hintText: "Search",
@@ -36,7 +36,7 @@ class SearchScreen extends StatelessWidget {
                   Expanded(
                     child: ListView.separated(
                       itemBuilder: (context, index) {
-                        final model = controller.newsEveryThingList[index];
+                        final model = state.newsEveryThingList[index];
                         return Padding(
                           padding: EdgeInsets.only(bottom: AppSize.h12),
                           child: ListTile(
@@ -67,7 +67,7 @@ class SearchScreen extends StatelessWidget {
                       separatorBuilder: (context, index) {
                         return Divider(color: Color(0xffD1DAD6));
                       },
-                      itemCount: controller.newsEveryThingList.length,
+                      itemCount: state.newsEveryThingList.length,
                     ),
                   ),
                 ],

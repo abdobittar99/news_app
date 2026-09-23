@@ -31,7 +31,7 @@ class UserRepository {
     return userBox.get(Constants.currentUser);
   }
 
-  Future<void> upadateUser({
+  Future<void> updateUser({
     String? name,
     String? email,
     String? password,

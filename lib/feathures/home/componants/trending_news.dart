@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/enums/request_status_enums.dart';
 import 'package:news_app/core/extensions/date_time_extension.dart';
@@ -7,8 +8,7 @@ import 'package:news_app/core/shared_widget/app_network_image.dart';
 import 'package:news_app/feathures/details/news_details_screen.dart';
 import 'package:news_app/feathures/home/componants/shimmer/trending_news_shimmer.dart';
 import 'package:news_app/feathures/home/componants/view_all_componatnts.dart';
-import 'package:news_app/feathures/home/home_controller.dart';
-import 'package:provider/provider.dart';
+import 'package:news_app/feathures/home/cubit/home_cubit.dart';
 
 class TrendingNews extends StatelessWidget {
   const TrendingNews({super.key});
@@ -46,27 +46,24 @@ class TrendingNews extends StatelessWidget {
 
                   SizedBox(
                     height: AppSize.h140,
-                    child: Consumer<HomeController>(
-                      builder: (context, controller, child) {
-                        switch (controller.everythingStatus) {
+                    child: BlocBuilder<HomeCubit, HomeState>(
+                      builder: (context, state) {
+                        switch (state.everythingStatus) {
                           case RequestStatusEnums.loading:
                             return TrendingNewsShimmer();
                           case RequestStatusEnums.error:
-                            return Center(
-                              child: Text(controller.errorMessage!),
-                            );
+                            return Center(child: Text(state.errorMessage!));
                           case RequestStatusEnums.loaded:
                             return ListView.separated(
                               scrollDirection: Axis.horizontal,
                               padding: EdgeInsets.only(left: AppSize.w12),
-                              itemCount: controller.newsEveryThingList
+                              itemCount: state.newsEverythingList
                                   .take(3)
                                   .length,
                               separatorBuilder: (context, index) =>
                                   SizedBox(width: AppSize.w12),
                               itemBuilder: (context, index) {
-                                final model =
-                                    controller.newsEveryThingList[index];
+                                final model = state.newsEverythingList[index];
 
                                 return InkWell(
                                   onTap: () {

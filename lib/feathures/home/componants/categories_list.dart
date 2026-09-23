@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/light_theme/light_color.dart';
 import 'package:news_app/feathures/home/categories_screen.dart';
 import 'package:news_app/feathures/home/componants/view_all_componatnts.dart';
-import 'package:news_app/feathures/home/home_controller.dart';
-import 'package:provider/provider.dart';
+import 'package:news_app/feathures/home/cubit/home_cubit.dart';
 
 class CategoriesList extends StatelessWidget {
   const CategoriesList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeController>(
-      builder: (context, controller, child) {
+    return BlocBuilder<HomeCubit, HomeState>(
+      builder: (context, state) {
         return SliverToBoxAdapter(
           child: Column(
             children: [
@@ -24,8 +24,8 @@ class CategoriesList extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return ChangeNotifierProvider.value(
-                          value: controller,
+                        return BlocProvider.value(
+                          value: context.read<HomeCubit>(),
                           child: CategoriesScreen(),
                         );
                       },
@@ -46,10 +46,10 @@ class CategoriesList extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       bool isSelected =
-                          controller.selectedCategory == categories[index];
+                          state.selectedCategory == categories[index];
                       return InkWell(
                         onTap: () {
-                          controller.updateSelectedCategory(
+                          context.read<HomeCubit>().updateSelectedCategory(
                             category: categories[index],
                           );
                         },

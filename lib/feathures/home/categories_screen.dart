@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/light_theme/light_color.dart';
 import 'package:news_app/feathures/home/componants/categories_list.dart';
 import 'package:news_app/feathures/home/componants/news_item.dart';
-import 'package:news_app/feathures/home/home_controller.dart';
-import 'package:provider/provider.dart';
+import 'package:news_app/feathures/home/cubit/home_cubit.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
@@ -20,8 +20,8 @@ class CategoriesScreen extends StatelessWidget {
         elevation: 0,
       ),
 
-      body: Consumer<HomeController>(
-        builder: (context, controller, child) {
+      body: BlocBuilder<HomeCubit, HomeState>(
+        builder: (context, state) {
           return Column(
             children: [
               Padding(
@@ -37,10 +37,10 @@ class CategoriesScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       bool isSelected =
-                          controller.selectedCategory == categories[index];
+                          state.selectedCategory == categories[index];
                       return InkWell(
                         onTap: () {
-                          controller.updateSelectedCategory(
+                          context.read<HomeCubit>().updateSelectedCategory(
                             category: categories[index],
                           );
                         },
@@ -77,9 +77,9 @@ class CategoriesScreen extends StatelessWidget {
               ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: controller.newsTopHeadlineList.length,
+                  itemCount: state.newsTopHeadLineList.length,
                   itemBuilder: (context, index) {
-                    final model = controller.newsTopHeadlineList[index];
+                    final model = state.newsTopHeadLineList[index];
                     return NewsItem(model: model);
                   },
                 ),

@@ -31,11 +31,12 @@ class _ProfileInfoBottomSheetState extends State<ProfileInfoBottomSheet> {
 
   Future<void> _saveData() async {
     if (_key.currentState?.validate() ?? false) {
-      await UserRepository().upadateUser(
+      await UserRepository().updateUser(
         email: emailController.text,
         name: userNameController.text,
       );
 
+      if (!mounted) return;
       Navigator.pop(context);
     }
   }

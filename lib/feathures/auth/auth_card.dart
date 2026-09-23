@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:news_app/core/constants/app_size.dart';
 
 class AuthCard extends StatelessWidget {
-  AuthCard({super.key, required this.child});
-  Widget child;
+  const AuthCard({super.key, required this.child});
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {

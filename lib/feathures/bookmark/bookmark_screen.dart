@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/enums/request_status_enums.dart';
 import 'package:news_app/core/shared_widget/empty_state.dart';
-import 'package:news_app/feathures/bookmark/bookmark_controller.dart';
+import 'package:news_app/feathures/bookmark/cubit/bookmark_cubit.dart';
 import 'package:news_app/feathures/home/componants/news_item.dart';
-import 'package:provider/provider.dart';
 
 class BookmarkScreen extends StatelessWidget {
   const BookmarkScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => BookmarkController(),
+    return BlocProvider(
+      create: (context) => BookmarkCubit()..loadBookmarks(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Bookmarks"),
           centerTitle: true,
           actions: [
-            Consumer<BookmarkController>(
-              builder: (context, controller, child) {
-                if (controller.bookmarks.isEmpty) return const SizedBox();
+            BlocBuilder<BookmarkCubit, BookmarkState>(
+              builder: (context, state) {
+                if (state.bookmarks.isEmpty) return const SizedBox();
 
                 return PopupMenuButton<String>(
                   onSelected: (value) {
@@ -45,9 +45,9 @@ class BookmarkScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: Consumer<BookmarkController>(
-          builder: (context, controller, child) {
-            switch (controller.bookmarksStatus) {
+        body: BlocBuilder<BookmarkCubit, BookmarkState>(
+          builder: (context, state) {
+            switch (state.bookmarksStatus) {
               case RequestStatusEnums.loading:
                 return const Center(child: CircularProgressIndicator());
 
@@ -63,12 +63,13 @@ class BookmarkScreen extends StatelessWidget {
                       ),
                       SizedBox(height: AppSize.h16),
                       Text(
-                        controller.errorMessage ?? 'An error occurred',
+                        state.errorMessage ?? 'An error occurred',
                         style: TextStyle(fontSize: AppSize.sp16),
                       ),
                       SizedBox(height: AppSize.h16),
                       ElevatedButton(
-                        onPressed: () => controller.loadBookmarks(),
+                        onPressed: () =>
+                            context.read<BookmarkCubit>().loadBookmarks(),
                         child: const Text('Retry'),
                       ),
                     ],
@@ -76,23 +77,23 @@ class BookmarkScreen extends StatelessWidget {
                 );
 
               case RequestStatusEnums.loaded:
-                if (controller.bookmarks.isEmpty) {
+                if (state.bookmarks.isEmpty) {
                   return const EmptyState();
                 }
 
                 return RefreshIndicator(
-                  onRefresh: () => controller.refresh(),
+                  onRefresh: () => context.read<BookmarkCubit>().refresh(),
                   child: Column(
                     children: [
                       Expanded(
                         child: ListView.builder(
                           padding: EdgeInsets.only(bottom: AppSize.h16),
-                          itemCount: controller.bookmarks.length,
+                          itemCount: state.bookmarks.length,
                           itemBuilder: (context, index) {
-                            final bookmark = controller.bookmarks[index];
-                            final article = controller.getArticleFromBookmark(
-                              bookmark,
-                            );
+                            final bookmark = state.bookmarks[index];
+                            final article = context
+                                .read<BookmarkCubit>()
+                                .getArticleFromBookmark(bookmark);
 
                             return Dismissible(
                               key: Key(bookmark.url),
@@ -110,7 +111,9 @@ class BookmarkScreen extends StatelessWidget {
                                 return await _showDeleteConfirmation(context);
                               },
                               onDismissed: (direction) {
-                                controller.removeBookmark(bookmark.url);
+                                context.read<BookmarkCubit>().removeBookmark(
+                                  bookmark.url,
+                                );
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: const Text('Bookmark removed'),
@@ -118,7 +121,9 @@ class BookmarkScreen extends StatelessWidget {
                                     action: SnackBarAction(
                                       label: 'Undo',
                                       onPressed: () {
-                                        controller.addBookmark(article);
+                                        context
+                                            .read<BookmarkCubit>()
+                                            .addBookmark(article);
                                       },
                                     ),
                                   ),
@@ -161,7 +166,7 @@ class BookmarkScreen extends StatelessWidget {
   }
 
   void _showClearConfirmation(BuildContext context) {
-    final controller = context.read<BookmarkController>();
+    final controller = context.read<BookmarkCubit>();
 
     showDialog(
       context: context,
