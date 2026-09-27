@@ -24,9 +24,9 @@ class _ProfileInfoBottomSheetState extends State<ProfileInfoBottomSheet> {
   }
 
   void _loadUserdata() {
-    final UserModel user = UserRepository().getUser()!;
-    userNameController.text = user.name ?? "";
-    emailController.text = user.email ?? "";
+    final UserModel? user = UserRepository().getUser();
+    userNameController.text = user?.name ?? "";
+    emailController.text = user?.email ?? "";
   }
 
   Future<void> _saveData() async {
@@ -97,7 +97,7 @@ class _ProfileInfoBottomSheetState extends State<ProfileInfoBottomSheet> {
                   controller: emailController,
                   onChanged: (value) {},
                   validator: (v) {
-                    return AppValidators.email(v);
+                    return AppValidators.required(v);
                   },
                 ),
                 SizedBox(height: AppSize.h40),

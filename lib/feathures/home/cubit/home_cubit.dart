@@ -14,13 +14,13 @@ class HomeCubit extends Cubit<HomeState> {
   final BaseNewsRepository newsRepository;
   void getTopHeadline({String? category}) async {
     try {
-      emit(state.copyWith(topHeadlineStatus: RequestStatusEnums.loading));
+      emit(state.copyWith(topHeadlineStatus: RequestStatus.loading));
 
       final artical = await newsRepository.getTopHeadline(category: category);
       emit(
         state.copyWith(
           newsTopHeadLineList: artical,
-          topHeadlineStatus: RequestStatusEnums.loaded,
+          topHeadlineStatus: RequestStatus.loaded,
 
           errorMessage: null,
         ),
@@ -29,7 +29,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(
         state.copyWith(
           errorMessage: e.toString(),
-          topHeadlineStatus: RequestStatusEnums.error,
+          topHeadlineStatus: RequestStatus.error,
         ),
       );
     }
@@ -41,7 +41,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(
         state.copyWith(
           newsEverythingList: artical,
-          everythingStatus: RequestStatusEnums.loaded,
+          everythingStatus: RequestStatus.loaded,
           errorMessage: null,
         ),
       );
@@ -49,10 +49,9 @@ class HomeCubit extends Cubit<HomeState> {
       emit(
         state.copyWith(
           errorMessage: e.toString(),
-          everythingStatus: RequestStatusEnums.error,
+          everythingStatus: RequestStatus.error,
         ),
       );
-     
     }
   }
 

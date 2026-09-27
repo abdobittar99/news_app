@@ -48,10 +48,11 @@ class BookmarkScreen extends StatelessWidget {
         body: BlocBuilder<BookmarkCubit, BookmarkState>(
           builder: (context, state) {
             switch (state.bookmarksStatus) {
-              case RequestStatusEnums.loading:
+               case RequestStatus.initial:
+              case RequestStatus.loading:
                 return const Center(child: CircularProgressIndicator());
 
-              case RequestStatusEnums.error:
+              case RequestStatus.error:
                 return Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -76,7 +77,7 @@ class BookmarkScreen extends StatelessWidget {
                   ),
                 );
 
-              case RequestStatusEnums.loaded:
+              case RequestStatus.loaded:
                 if (state.bookmarks.isEmpty) {
                   return const EmptyState();
                 }

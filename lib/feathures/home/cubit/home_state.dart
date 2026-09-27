@@ -2,16 +2,16 @@ part of 'home_cubit.dart';
 
 class HomeState extends Equatable {
   const HomeState({
-    this.everythingStatus = RequestStatusEnums.loading,
-    this.topHeadlineStatus = RequestStatusEnums.loading,
+    this.everythingStatus = RequestStatus.loading,
+    this.topHeadlineStatus = RequestStatus.loading,
     this.errorMessage,
     this.selectedCategory,
     this.newsTopHeadLineList = const [],
     this.newsEverythingList = const [],
   });
 
-  final RequestStatusEnums everythingStatus;
-  final RequestStatusEnums topHeadlineStatus;
+  final RequestStatus everythingStatus;
+  final RequestStatus topHeadlineStatus;
 
   final String? errorMessage;
 
@@ -21,8 +21,8 @@ class HomeState extends Equatable {
   final List<NewsArticleModel> newsEverythingList;
 
   HomeState copyWith({
-    RequestStatusEnums? everythingStatus,
-    RequestStatusEnums? topHeadlineStatus,
+    RequestStatus? everythingStatus,
+    RequestStatus? topHeadlineStatus,
     String? errorMessage,
     String? selectedCategory,
     List<NewsArticleModel>? newsTopHeadLineList,

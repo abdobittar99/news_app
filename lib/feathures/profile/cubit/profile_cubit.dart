@@ -22,7 +22,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     final UserModel? user = UserRepository().getUser();
     emit(
       state.copyWith(
-        userName: user?.name,
+        userName: user?.name ?? user?.email,
         countryName: user?.countryName,
         countryCode: user?.countryCode,
       ),

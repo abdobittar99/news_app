@@ -2,11 +2,11 @@ part of 'search_cubit.dart';
 
 class SearchState extends Equatable {
   const SearchState({
-    this.everythingStatus = RequestStatusEnums.loading,
+    this.everythingStatus = RequestStatus.loading,
     this.newsEveryThingList = const [],
     this.errorMessage,
   });
-  final RequestStatusEnums everythingStatus;
+  final RequestStatus everythingStatus;
   final List<NewsArticleModel> newsEveryThingList;
   final String? errorMessage;
 
@@ -18,7 +18,7 @@ class SearchState extends Equatable {
   ];
 
   SearchState copyWith({
-    RequestStatusEnums? everythingStatus,
+    RequestStatus? everythingStatus,
     List<NewsArticleModel>? newsEveryThingList,
     String? errorMessage,
   }) {

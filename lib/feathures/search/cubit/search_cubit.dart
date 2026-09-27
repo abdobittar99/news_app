@@ -21,14 +21,14 @@ class SearchCubit extends Cubit<SearchState> {
           newsEveryThingList: await newsRepository.getEverything(
             query: searchController.text,
           ),
-          everythingStatus: RequestStatusEnums.loaded,
+          everythingStatus: RequestStatus.loaded,
           errorMessage: null,
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          everythingStatus: RequestStatusEnums.error,
+          everythingStatus: RequestStatus.error,
           errorMessage: e.toString(),
         ),
       );

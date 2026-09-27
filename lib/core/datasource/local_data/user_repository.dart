@@ -63,7 +63,7 @@ class UserRepository {
     final user = getUser();
 
     if (user == null) {
-      return "Ao Account found please register";
+      return "No Account found please register";
     }
     if (user.email != email || user.passowrd != password) {
       return "Wrong email or password";
@@ -78,7 +78,7 @@ class UserRepository {
   }) async {
     final user = getUser();
 
-    if (user != null) {
+    if (user != null && user.email == email) {
       return "user already exist";
     }
     final newUser = UserModel(email: email, name: userName, passowrd: password);

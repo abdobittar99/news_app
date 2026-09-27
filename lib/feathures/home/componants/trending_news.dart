@@ -49,11 +49,12 @@ class TrendingNews extends StatelessWidget {
                     child: BlocBuilder<HomeCubit, HomeState>(
                       builder: (context, state) {
                         switch (state.everythingStatus) {
-                          case RequestStatusEnums.loading:
+                          case RequestStatus.initial:
+                          case RequestStatus.loading:
                             return TrendingNewsShimmer();
-                          case RequestStatusEnums.error:
+                          case RequestStatus.error:
                             return Center(child: Text(state.errorMessage!));
-                          case RequestStatusEnums.loaded:
+                          case RequestStatus.loaded:
                             return ListView.separated(
                               scrollDirection: Axis.horizontal,
                               padding: EdgeInsets.only(left: AppSize.w12),

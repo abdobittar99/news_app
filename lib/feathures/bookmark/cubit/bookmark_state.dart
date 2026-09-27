@@ -2,12 +2,12 @@ part of 'bookmark_cubit.dart';
 
 class BookmarkState extends Equatable {
   const BookmarkState({
-    this.bookmarksStatus = RequestStatusEnums.loading,
+    this.bookmarksStatus = RequestStatus.loading,
     this.bookmarks = const [],
     this.errorMessage,
     this.searchQuery = "",
   });
-  final RequestStatusEnums bookmarksStatus;
+  final RequestStatus bookmarksStatus;
   final List<BookmarkModel> bookmarks;
   final String? errorMessage;
 
@@ -20,7 +20,7 @@ class BookmarkState extends Equatable {
     searchQuery,
   ];
   BookmarkState copyWith({
-    RequestStatusEnums? bookmarksStatus,
+    RequestStatus? bookmarksStatus,
     List<BookmarkModel>? bookmarks,
     String? errorMessage,
     String? searchQuery,

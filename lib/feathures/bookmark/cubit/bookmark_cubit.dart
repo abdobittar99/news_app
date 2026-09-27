@@ -13,7 +13,7 @@ class BookmarkCubit extends Cubit<BookmarkState> {
 
   void loadBookmarks() {
     try {
-      emit(state.copyWith(bookmarksStatus: RequestStatusEnums.loading));
+      emit(state.copyWith(bookmarksStatus: RequestStatus.loading));
 
       if (state.searchQuery.isEmpty) {
         emit(state.copyWith(bookmarks: _repository.getBookmarks()));
@@ -27,14 +27,14 @@ class BookmarkCubit extends Cubit<BookmarkState> {
 
       emit(
         state.copyWith(
-          bookmarksStatus: RequestStatusEnums.loaded,
+          bookmarksStatus: RequestStatus.loaded,
           errorMessage: null,
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          bookmarksStatus: RequestStatusEnums.error,
+          bookmarksStatus: RequestStatus.error,
           errorMessage: e.toString(),
         ),
       );
