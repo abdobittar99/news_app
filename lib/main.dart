@@ -6,10 +6,12 @@ import 'package:news_app/core/light_theme/light_theme.dart';
 import 'package:news_app/feathures/bookmark/data/bookmark_repository.dart';
 import 'package:news_app/feathures/splash/splash_screen.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
   await UserRepository().init();
+  // await PreferencesManeger().clear();
   await BookmarkRepository().init();
   await PreferencesManeger().init();
   runApp(MyApp());
@@ -25,10 +27,11 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       builder: (cxt, _) {
         return MaterialApp(
+          navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: lightTheme,
-          home: SplashScreen(),
+          home: const SplashScreen(),
         );
       },
     );

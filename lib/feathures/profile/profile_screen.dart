@@ -109,8 +109,8 @@ class ProfileScreen extends StatelessWidget {
                     Icons.logout,
                     () async {
                       await UserRepository().delete();
-
-                      await PreferencesManeger().clear();
+                      // await PreferencesManeger().clear();
+                      await PreferencesManeger().setBool("is_logged_in", false);
                       if (!context.mounted) return;
 
                       Navigator.pushReplacement(

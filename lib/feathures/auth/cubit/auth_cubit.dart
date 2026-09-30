@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:news_app/core/datasource/local_data/preferences_maneger.dart';
@@ -26,6 +24,7 @@ class AuthCubit extends Cubit<AuthState> {
         emit(
           state.copyWith(status: RequestStatus.loaded, userModel: userModel),
         );
+        PreferencesManeger().setBool("is_logged_in", true);
       }
     } catch (e) {
       emit(

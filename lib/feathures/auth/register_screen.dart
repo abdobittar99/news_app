@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/constants/app_size.dart';
-import 'package:news_app/core/datasource/local_data/preferences_maneger.dart';
-import 'package:news_app/core/datasource/local_data/user_repository.dart';
-import 'package:news_app/core/datasource/remote_data/api_service.dart';
+import 'package:news_app/core/datasource/remote_data/auth/auth_api_service.dart';
 import 'package:news_app/core/enums/request_status_enums.dart';
 import 'package:news_app/core/light_theme/light_color.dart';
 import 'package:news_app/core/shared_widget/app_button.dart';
@@ -31,7 +29,7 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => AuthCubit(AuthRepository(ApiService())),
+        create: (context) => AuthCubit(AuthRepository(AuthApiService())),
         child: AuthCard(
           child: Form(
             key: _form,
@@ -127,7 +125,11 @@ class RegisterScreen extends StatelessWidget {
                       text: "Sign up",
                       onPressed: () {
                         if (_form.currentState?.validate() ?? false) {
-                          context.read<AuthCubit>().register(email: emailController.text,userName: userNameController.text,password: passwordController.text);
+                          context.read<AuthCubit>().register(
+                            email: emailController.text,
+                            userName: userNameController.text,
+                            password: passwordController.text,
+                          );
                         }
                       },
                     ),

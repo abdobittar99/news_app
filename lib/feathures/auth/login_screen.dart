@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/constants/app_size.dart';
-import 'package:news_app/core/datasource/local_data/preferences_maneger.dart';
-import 'package:news_app/core/datasource/remote_data/api_service.dart';
+import 'package:news_app/core/datasource/remote_data/auth/auth_api_service.dart';
 import 'package:news_app/core/enums/request_status_enums.dart';
 import 'package:news_app/core/light_theme/light_color.dart';
 import 'package:news_app/core/shared_widget/app_button.dart';
@@ -25,13 +24,12 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthCubit(AuthRepository(ApiService())),
+      create: (context) => AuthCubit(AuthRepository(AuthApiService())),
       child: Scaffold(
         body: AuthCard(
           child: BlocConsumer<AuthCubit, AuthState>(
             listener: (context, state) {
               if (state.status == RequestStatus.loaded) {
-                PreferencesManeger().setBool("is_logged_in", true);
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => HomeLayoutScraan()),
