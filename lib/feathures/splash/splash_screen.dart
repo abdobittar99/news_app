@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/datasource/local_data/preferences_maneger.dart';
 import 'package:news_app/core/datasource/local_data/user_repository.dart';
-import 'package:news_app/feathures/auth/login_screen.dart';
+import 'package:news_app/feathures/auth/ui/login_screen.dart';
 import 'package:news_app/feathures/home_layout/home_layout_scraan.dart';
-import 'package:news_app/feathures/onboarding/onboarding_screen.dart';
+import 'package:news_app/feathures/onboarding/ui/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

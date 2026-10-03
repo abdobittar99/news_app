@@ -10,7 +10,7 @@ import 'package:news_app/feathures/profile/bottom_sheet/profile_info_bottom_shee
 import 'package:news_app/feathures/profile/cubit/profile_cubit.dart';
 import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/datasource/local_data/preferences_maneger.dart';
-import 'package:news_app/feathures/auth/login_screen.dart';
+import 'package:news_app/feathures/auth/ui/login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

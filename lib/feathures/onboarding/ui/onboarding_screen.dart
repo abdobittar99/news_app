@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/datasource/local_data/preferences_maneger.dart';
-import 'package:news_app/feathures/auth/login_screen.dart';
+import 'package:news_app/feathures/auth/ui/login_screen.dart';
 import 'package:news_app/feathures/onboarding/cubit/onboarding_cubit.dart';
 import 'package:news_app/feathures/onboarding/model/onboarding_model.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
