@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/light_theme/light_color.dart';
-import 'package:news_app/feathures/home/categories_screen.dart';
+import 'package:news_app/feathures/home/ui/categories_screen.dart';
 import 'package:news_app/feathures/home/componants/view_all_componatnts.dart';
 import 'package:news_app/feathures/home/cubit/home_cubit.dart';
 

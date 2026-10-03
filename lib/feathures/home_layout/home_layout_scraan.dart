@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/feathures/bookmark/bookmark_Screen.dart';
 import 'package:news_app/feathures/bookmark/data/bookmark_repository.dart';
-import 'package:news_app/feathures/home/home_screen.dart';
-import 'package:news_app/feathures/profile/profile_screen.dart';
-import 'package:news_app/feathures/search/search_screen.dart';
+import 'package:news_app/feathures/home/ui/home_screen.dart';
+import 'package:news_app/feathures/profile/ui/profile_screen.dart';
+import 'package:news_app/feathures/search/ui/search_screen.dart';
 
 class HomeLayoutScraan extends StatefulWidget {
   const HomeLayoutScraan({super.key});

@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:news_app/core/constants/app_size.dart';
 import 'package:news_app/core/datasource/local_data/user_repository.dart';
@@ -57,7 +59,12 @@ class _ProfileInfoBottomSheetState extends State<ProfileInfoBottomSheet> {
           top: AppSize.h16,
           right: AppSize.w16,
           left: AppSize.w16,
-          bottom: MediaQuery.of(context).viewInsets.bottom + AppSize.h16,
+          bottom:
+              math.max(
+                MediaQuery.of(context).viewInsets.bottom,
+                MediaQuery.of(context).viewPadding.bottom,
+              ) +
+              AppSize.h16,
         ),
         child: SingleChildScrollView(
           child: Form(
