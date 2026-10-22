@@ -1,8 +1,8 @@
 # News App
 
-A modern and responsive Flutter news application that retrieves news articles from external REST APIs and allows users to browse, search, and save their favorite news.
+A modern and responsive Flutter news application developed as a hands-on project while following a practical Flutter course. The application retrieves news articles from external REST APIs and allows users to browse, search, and save their favorite news.
 
-The application is built using Clean Architecture and the Repository Pattern, with Cubit for state management and Hive for local data storage.
+The project provided practical experience with Clean Architecture, Repository Pattern, Cubit for state management, Dio for API integration, and Hive for local data storage.
 
 ---
 
