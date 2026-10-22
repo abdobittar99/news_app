@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/feathures/bookmark/bookmark_Screen.dart';
+import 'package:news_app/feathures/bookmark/ui/bookmark_Screen.dart';
 import 'package:news_app/feathures/bookmark/data/bookmark_repository.dart';
 import 'package:news_app/feathures/home/ui/home_screen.dart';
 import 'package:news_app/feathures/profile/ui/profile_screen.dart';
